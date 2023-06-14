@@ -1,0 +1,23 @@
+version: '3'
+services:
+  dev-vault:
+    image: vault
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=secret_token
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - "8200:8200"
+
+  postgresql:
+    container_name: db
+    image: postgres
+    expose:
+      - 5433
+    ports:
+      - "127.0.0.1:5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=damn_secret_password
+      - POSTGRES_DB=db
+      - POSTGRES_HOST_AUTH_METHOD=trust
